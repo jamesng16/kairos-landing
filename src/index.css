@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Golos Text", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-kairos-purple: #534AB7;
+  --color-kairos-purple-dark: #41389B;
+  --color-kairos-purple-soft: #EEEDFA;
+  --color-kairos-amber: #EF9F27;
+  --color-kairos-amber-soft: #FEF4E2;
+  --color-kairos-ink: #0B0B0B;
+  --color-kairos-muted: #52514E;
+  --color-kairos-slate: #1E232B;
+  --color-kairos-slate-card: #242933;
+  --color-kairos-cream: #F6F0EA;
+  --color-kairos-tile: #EAF0F8;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    color: var(--color-kairos-ink);
+    background-color: #F4F7FB;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes kairos-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes kairos-pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.animate-kairos-float {
+  animation: kairos-float 6s ease-in-out infinite;
+}
+
+.animate-kairos-pulse {
+  animation: kairos-pulse-ring 2.6s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+/* Atmospheric sky & mountain gradient matching reference composition */
+.kairos-hero-sky {
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 10%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 65%),
+    radial-gradient(ellipse 70% 50% at 15% 45%, rgba(83, 74, 183, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 65% 45% at 85% 40%, rgba(239, 159, 39, 0.08) 0%, transparent 65%),
+    linear-gradient(180deg, #E2EBF6 0%, #EDF2F8 42%, #F8FAFC 100%);
+}
+
+.kairos-grid-hairline {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
