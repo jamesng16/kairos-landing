@@ -1,38 +1,57 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
-  delay?: number;
-  yOffset?: number;
   className?: string;
 }
 
 export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
-  delay = 0,
-  yOffset = 22,
   className = '',
 }) => {
-  const prefersReduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [fallbackVisible, setFallbackVisible] = useState(true);
 
-  if (prefersReduced) {
-    return <div className={className}>{children}</div>;
-  }
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof window === 'undefined') return;
+
+    const supportsScrollDriven =
+      window.CSS?.supports?.('(animation-timeline: view()) and (animation-range: entry)') ??
+      false;
+    const noReducedMotion =
+      window.matchMedia?.('(prefers-reduced-motion: no-preference)').matches ?? false;
+
+    if (supportsScrollDriven || !noReducedMotion) {
+      setFallbackVisible(true);
+      return;
+    }
+
+    // Fallback for browsers without scroll-driven animation support
+    setFallbackVisible(false);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setFallbackVisible(true);
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: yOffset }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{
-        duration: 0.55,
-        delay,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className={className}
+    <div
+      ref={ref}
+      className={`kairos-scroll-reveal transition-[opacity,transform] duration-500 ease-out ${
+        fallbackVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+      } ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };

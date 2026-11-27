@@ -130,12 +130,14 @@ export interface SiteContent {
     nameLabel: string;
     namePlaceholder: string;
     contactLabel: string;
+    contactHint: string;
     contactPlaceholder: string;
     goalLabel: string;
     goals: string[];
     consent: string;
     submitBtn: string;
     submitting: string;
+    errorLabel: string;
     errorEmptyContact: string;
     errorConsent: string;
     successTitle: string;
@@ -446,6 +448,7 @@ export const CONTENT: Record<Lang, SiteContent> = {
       nameLabel: 'Как к вам обращаться (необязательно)',
       namePlaceholder: 'Например, Алексей',
       contactLabel: 'Email или @username в Telegram *',
+      contactHint: 'Формат: name@example.ru или @username',
       contactPlaceholder: 'name@example.ru или @username',
       goalLabel: 'Что для вас сейчас важнее всего?',
       goals: [
@@ -457,7 +460,8 @@ export const CONTENT: Record<Lang, SiteContent> = {
       consent: 'Согласен на обработку контактных данных для получения приглашения в ранний доступ (152-ФЗ).',
       submitBtn: 'Получить ранний доступ',
       submitting: 'Отправляем...',
-      errorEmptyContact: 'Укажите Email или @username в Telegram.',
+      errorLabel: 'Ошибка',
+      errorEmptyContact: 'Укажите корректный Email или @username в Telegram (от 3 символов).',
       errorConsent: 'Подтвердите согласие на обработку данных.',
       successTitle: 'Вы в списке раннего доступа!',
       successBody:
@@ -766,6 +770,7 @@ export const CONTENT: Record<Lang, SiteContent> = {
       nameLabel: 'Your name (optional)',
       namePlaceholder: 'e.g., Alexey',
       contactLabel: 'Email or Telegram @username *',
+      contactHint: 'Format: name@example.ru or @username',
       contactPlaceholder: 'name@example.ru or @username',
       goalLabel: 'What matters most to you right now?',
       goals: [
@@ -777,7 +782,8 @@ export const CONTENT: Record<Lang, SiteContent> = {
       consent: 'I agree to the processing of my contact details for early access updates (152-FZ).',
       submitBtn: 'Request Early Access',
       submitting: 'Submitting...',
-      errorEmptyContact: 'Please enter your Email or Telegram @username.',
+      errorLabel: 'Error',
+      errorEmptyContact: 'Enter a valid Email or Telegram @username (at least 3 characters).',
       errorConsent: 'Please confirm data processing consent.',
       successTitle: "You're on the early-access list!",
       successBody:

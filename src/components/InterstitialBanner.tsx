@@ -58,6 +58,10 @@ export const InterstitialBanner: React.FC<InterstitialBannerProps> = ({
                 <img
                   src={`${import.meta.env.BASE_URL}images/kairos-prism.jpg`}
                   alt="Kairos 3D financial engine prism"
+                  width={760}
+                  height={428}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                 />
               </div>

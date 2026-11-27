@@ -36,39 +36,20 @@
   font-variant-numeric: tabular-nums;
 }
 
-@keyframes kairos-float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+/* Visually hidden utility (accessible to screen readers) */
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
 }
 
-@keyframes kairos-pulse-ring {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.7;
-  }
-  70% {
-    transform: scale(1.35);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1.35);
-    opacity: 0;
-  }
-}
-
-.animate-kairos-float {
-  animation: kairos-float 6s ease-in-out infinite;
-}
-
-.animate-kairos-pulse {
-  animation: kairos-pulse-ring 2.6s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-}
-
-/* Atmospheric sky & mountain gradient matching reference composition */
+/* Atmospheric sky & mountain gradient */
 .kairos-hero-sky {
   background:
     radial-gradient(ellipse 90% 60% at 50% 10%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 65%),
@@ -82,4 +63,139 @@
     linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 64px 64px;
+}
+
+/* Defer offscreen below-the-fold heavy rendering while preserving intrinsic height */
+.kairos-deferred-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 900px;
+}
+
+/* Finite ambient signal pulse gated by reduced-motion preference (<= 5s total, WCAG 2.2.2) */
+@keyframes kairos-pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-kairos-pulse {
+    animation: kairos-pulse-ring 1.8s cubic-bezier(0.24, 0, 0.38, 1) 2;
+  }
+}
+
+/* Scroll-driven entry reveal on compositor (transform + opacity) with fallback */
+@keyframes kairos-scroll-reveal {
+  from {
+    opacity: 0;
+    translate: 0 22px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .kairos-scroll-reveal {
+      animation: kairos-scroll-reveal auto linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+/* Native <dialog> top-layer modal containment + @starting-style entry/exit */
+dialog.kairos-dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog.kairos-dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(11, 11, 11, 0);
+  transition-property: background-color, display, overlay;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+dialog.kairos-dialog {
+  opacity: 0;
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-behavior: allow-discrete;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.kairos-dialog {
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.kairos-dialog,
+  dialog.kairos-dialog::backdrop {
+    transition-duration: 0.1s;
+  }
+}
+
+dialog.kairos-dialog[open]:where(:not([data-closing])) {
+  opacity: 1;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transform: scale(1) translateY(0);
+
+    @starting-style {
+      transform: scale(0.96) translateY(8px);
+    }
+  }
+}
+
+dialog.kairos-dialog[open]:where(:not([data-closing]))::backdrop {
+  background-color: rgba(11, 11, 11, 0.62);
+  backdrop-filter: blur(3px);
+
+  @starting-style {
+    background-color: rgba(11, 11, 11, 0);
+  }
+}
+
+/* Post-interaction form validation (:user-invalid / :user-valid + JS fallback classes) */
+.kairos-field-input:is(:user-invalid, .user-invalid-fallback) {
+  border-color: #d93025;
+  background-color: #fef2f2;
+}
+
+.kairos-field-input:is(:user-valid, .user-valid-fallback) {
+  border-color: #188038;
+}
+
+.kairos-error-msg {
+  display: none;
+  color: #b91c1c;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  margin-top: 0.35rem;
+}
+
+.kairos-field-input:is(:user-invalid, .user-invalid-fallback) + .kairos-error-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
 }

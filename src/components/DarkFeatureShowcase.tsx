@@ -18,7 +18,7 @@ export const DarkFeatureShowcase: React.FC<DarkFeatureShowcaseProps> = ({
   return (
     <section
       id="features"
-      className="relative bg-[#1E232B] text-white kairos-grid-hairline py-20 sm:py-28"
+      className="relative bg-[#1E232B] text-white kairos-grid-hairline py-20 sm:py-28 kairos-deferred-section"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Centered Header */}

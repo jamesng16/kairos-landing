@@ -58,6 +58,10 @@ export const BottomCtaAndFooter: React.FC<BottomCtaAndFooterProps> = ({
                 <img
                   src={`${import.meta.env.BASE_URL}images/kairos-monolith.jpg`}
                   alt="Kairos geometric summit sculpture"
+                  width={576}
+                  height={576}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                 />
               </div>

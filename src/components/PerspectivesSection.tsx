@@ -11,7 +11,7 @@ interface PerspectivesSectionProps {
 
 export const PerspectivesSection: React.FC<PerspectivesSectionProps> = ({ content }) => {
   return (
-    <section id="perspectives" className="bg-white py-20 sm:py-24 border-y border-slate-200/80">
+    <section id="perspectives" className="bg-white py-20 sm:py-24 border-y border-slate-200/80 kairos-deferred-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="text-center max-w-3xl mx-auto mb-14">
           <h2 className="font-display font-bold uppercase tracking-tight text-5xl sm:text-7xl text-[#0B0B0B]">

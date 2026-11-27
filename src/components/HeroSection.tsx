@@ -18,7 +18,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ content, onOpenWaitlis
       id="top"
       className="relative overflow-hidden kairos-hero-sky pt-24 pb-16 sm:pt-28 sm:pb-20 border-b border-slate-200/80"
     >
-      {/* Atmospheric Mountain Peak Backdrop seamlessly masked into sky */}
+      {/* Atmospheric Mountain Peak Backdrop (LCP hero image with high fetch priority) */}
       <div
         className="pointer-events-none absolute inset-x-0 top-12 h-[440px] sm:h-[520px] flex justify-center overflow-hidden"
         aria-hidden="true"
@@ -26,6 +26,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ content, onOpenWaitlis
         <img
           src={`${import.meta.env.BASE_URL}images/hero-mountain.jpg`}
           alt=""
+          width={1380}
+          height={776}
+          fetchPriority="high"
+          decoding="async"
           className="w-full max-w-[1380px] h-full object-cover object-center opacity-85"
           style={{
             maskImage:
@@ -68,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ content, onOpenWaitlis
           {/* Centerpiece MacBook Pro with Notch + 3D Lid-Opening Animation */}
           <div className="lg:col-span-6 relative flex flex-col items-center pb-8 sm:pb-12">
             <div
-              className="relative w-full max-w-[540px] animate-kairos-float"
+              className="relative w-full max-w-[540px]"
               style={{ perspective: '1400px' }}
             >
               {/* Animated MacBook Display Lid opening from closed angle */}

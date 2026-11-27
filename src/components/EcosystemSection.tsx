@@ -10,7 +10,7 @@ interface EcosystemSectionProps {
 
 export const EcosystemSection: React.FC<EcosystemSectionProps> = ({ content }) => {
   return (
-    <section id="ecosystem" className="bg-[#F8FAFC] py-20 sm:py-24">
+    <section id="ecosystem" className="bg-[#F8FAFC] py-20 sm:py-24 kairos-deferred-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center space-y-3 mb-14">
           <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#534AB7]">

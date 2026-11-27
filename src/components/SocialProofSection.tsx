@@ -22,7 +22,7 @@ export const SocialProofSection: React.FC<SocialProofSectionProps> = ({
   };
 
   return (
-    <section id="proof" className="relative bg-[#F6F0EA] pt-16 pb-20 sm:pb-24">
+    <section id="proof" className="relative bg-[#F6F0EA] pt-16 pb-20 sm:pb-24 kairos-deferred-section">
       {/* Jagged Mountain Ridge Top Divider matching everest-systems.jpg */}
       <div className="absolute -top-8 inset-x-0 overflow-hidden leading-none pointer-events-none">
         <svg
